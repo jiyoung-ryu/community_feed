@@ -6,7 +6,7 @@ import kr.co.bullets.user.domain.User;
 import kr.co.bullets.user.domain.UserInfo;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class UserService {
 
     private final UserRepository userRepository;
