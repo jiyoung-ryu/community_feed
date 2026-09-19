@@ -1,36 +1,42 @@
 package kr.co.bullets.user.domain;
 
+import kr.co.bullets.common.domain.PositiveIntegerCounter;
+
 import java.util.Objects;
 
 public class User {
     private final Long id;
     private final UserInfo userInfo;
-    private final UserRelationCount followingCount;
-    private final UserRelationCount followerCount;
+    private final PositiveIntegerCounter followingCount;
+    private final PositiveIntegerCounter followerCount;
 
     public User(Long id, UserInfo userInfo) {
+        if (userInfo == null) {
+            throw new IllegalArgumentException("UserInfo cannot be null");
+        }
+
         this.id = id;
         this.userInfo = userInfo;
-        this.followingCount = new UserRelationCount();
-        this.followerCount = new UserRelationCount();
+        this.followingCount = new PositiveIntegerCounter();
+        this.followerCount = new PositiveIntegerCounter();
     }
 
-    public void follow(User targetUser) {
-        if (this.equals(targetUser)) {
-            throw new IllegalArgumentException();
+    public void follow(User followee) {
+        if (this.equals(followee)) {
+            throw new IllegalArgumentException("");
         }
 
         followingCount.increase();
-        targetUser.increaseFollowerCount();
+        followee.increaseFollowerCount();
     }
 
-    public void unfollow(User targetUser) {
-        if (this.equals(targetUser)) {
-            throw new IllegalArgumentException();
+    public void unfollow(User followee) {
+        if (this.equals(followee)) {
+            throw new IllegalArgumentException("");
         }
 
         followingCount.decrease();
-        targetUser.decreaseFollowerCount();
+        followee.decreaseFollowerCount();
     }
 
     private void increaseFollowerCount() {
@@ -41,10 +47,31 @@ public class User {
         followerCount.decrease();
     }
 
+    public int getFollowingCount() {
+        return followingCount.getCount();
+    }
+
+    public int getFollowerCount() {
+        return followerCount.getCount();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof User user)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
         return Objects.equals(id, user.id);
     }
 
