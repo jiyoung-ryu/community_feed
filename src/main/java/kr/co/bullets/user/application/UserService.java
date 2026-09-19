@@ -4,7 +4,9 @@ import kr.co.bullets.user.application.dto.CreateUserRequestDto;
 import kr.co.bullets.user.application.interfaces.UserRepository;
 import kr.co.bullets.user.domain.User;
 import kr.co.bullets.user.domain.UserInfo;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
 
     private final UserRepository userRepository;
