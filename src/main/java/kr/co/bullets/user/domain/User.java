@@ -1,10 +1,17 @@
 package kr.co.bullets.user.domain;
 
 import kr.co.bullets.common.domain.PositiveIntegerCounter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.util.Objects;
 
+@Builder
+@AllArgsConstructor
+@Getter
 public class User {
+
     private final Long id;
     private final UserInfo userInfo;
     private final PositiveIntegerCounter followingCount;
@@ -55,12 +62,12 @@ public class User {
         return followerCount.getCount();
     }
 
-    public Long getId() {
-        return id;
+    public String getName() {
+        return userInfo.getName();
     }
 
-    public UserInfo getUserInfo() {
-        return userInfo;
+    public String getProfileImage() {
+        return userInfo.getProfileImageUrl();
     }
 
     @Override
